@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SJ NOTES</title>
+
+<style>
+/* =========================
+   GENERAL
+========================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #8A0303;
+    color: black;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    background: #500000;
+    color: white;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 4px 15px black;
+}
+
+header h1 {
+    font-size: 42px;
+    letter-spacing: 3px;
+}
+
+header p {
+    margin-top: 8px;
+}
+
+/* =========================
+   HOME PAGE
+========================= */
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 32px;
+}
+
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.subject {
+    background: white;
+    padding: 30px 15px;
+    text-align: center;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+    transition: 0.3s;
+}
+
+.subject:hover {
+    transform: translateY(-7px);
+    background: #ffdede;
+}
+
+/* =========================
+   MC PAGE
+========================= */
+
+#mcPage {
+    display: none;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: #171717;
+    color: white;
+}
+
+/* Mathematical background */
+
+#mcPage::before {
+    content: "A⁻¹  A×B  det(A)  Σx  λ  ∫  ∂  x²+y²  AX=B  Gauss  Matrix  Rank  101010  Echelon";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 45px;
+    line-height: 110px;
+    word-spacing: 30px;
+    opacity: 0.06;
+    transform: rotate(-10deg) scale(1.3);
+    pointer-events: none;
+}
+
+.mc-content {
+    position: relative;
+    z-index: 1;
+    width: 92%;
+    max-width: 1100px;
+    margin: auto;
+    padding: 30px 0;
+}
+
+.back-btn {
+    background: #8A0303;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.back-btn:hover {
+    background: #b00000;
+}
+
+.mc-title {
+    text-align: center;
+    margin: 25px 0;
+    font-size: 38px;
+}
+
+/* =========================
+   RULES
+========================= */
+
+.rules {
+    background: rgba(255,255,255,0.95);
+    color: black;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px black;
+}
+
+.rules h2 {
+    margin-bottom: 12px;
+}
+
+.rules li {
+    margin: 8px 0;
+}
+
+/* =========================
+   TOPICS
+========================= */
+
+.topic {
+    background: rgba(255,255,255,0.95);
+    color: black;
+    padding: 20px;
+    margin: 18px 0;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px black;
+}
+
+.topic h2 {
+    margin-bottom: 12px;
+}
+
+.topic p {
+    margin: 10px 0;
+}
+
+.subtopic {
+    margin: 10px 0 10px 20px;
+    font-weight: bold;
+}
+
+/* =========================
+   AI BOX
+========================= */
+
+.ai-box {
+    background: #eeeeee;
+    border-left: 6px solid #8A0303;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 8px;
+}
+
+.ai-box h3 {
+    margin-bottom: 10px;
+}
+
+.ai-input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #777;
+    border-radius: 6px;
+}
+
+.ai-button {
+    background: #8A0303;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.ai-answer {
+    background: white;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 6px;
+    min-height: 40px;
+}
+
+/* =========================
+   QUESTIONS
+========================= */
+
+.questions {
+    background: rgba(255,255,255,0.95);
+    color: black;
+    padding: 25px;
+    margin-top: 25px;
+    border-radius: 15px;
+}
+
+.question {
+    padding: 15px 0;
+    border-bottom: 1px solid #aaa;
+}
+
+.question button {
+    margin-top: 8px;
+    padding: 8px 15px;
+    border: none;
+    background: #8A0303;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.answer {
+    display: none;
+    margin-top: 8px;
+    padding: 10px;
+    background: #eee;
+    border-radius: 5px;
+}
+
+/* =========================
+   QUIZ
+========================= */
+
+.quiz {
+    background: white;
+    color: black;
+    padding: 25px;
+    border-radius: 15px;
+    margin-top: 25px;
+}
+
+.quiz-question {
+    margin: 20px 0;
+}
+
+.option {
+    display: block;
+    margin: 8px 0;
+}
+
+.quiz button {
+    background: #8A0303;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.score {
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px) {
+
+    header h1 {
+        font-size: 30px;
+    }
+
+    .mc-title {
+        font-size: 28px;
+    }
+
+    .subject-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     HOME PAGE
+========================= -->
+
+<div id="homePage">
+
+<header>
+    <h1>📚 SJ NOTES</h1>
+    <p>Your College Notes & Study Material</p>
+</header>
+
+<div class="container">
+
+    <h2 class="page-title">📖 Subjects</h2>
+
+    <div class="subject-grid">
+
+        <div class="subject" onclick="openMC()">
+            MC
+        </div>
+
+        <div class="subject">
+            AEP
+        </div>
+
+        <div class="subject">
+            AEP LAB
+        </div>
+
+        <div class="subject">
+            PPS
+        </div>
+
+        <div class="subject">
+            PPS LAB
+        </div>
+
+        <div class="subject">
+            BEE
+        </div>
+
+        <div class="subject">
+            BEE LAB
+        </div>
+
+        <div class="subject">
+            ED CAD
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     MC PAGE
+========================= -->
+
+<div id="mcPage">
+
+<div class="mc-content">
+
+    <button class="back-btn" onclick="goHome()">
+        ← Back to Subjects
+    </button>
+
+    <h1 class="mc-title">
+        📐 MC - Mathematics
+    </h1>
+
+
+    <!-- RULES -->
+
+    <div class="rules">
+
+        <h2>📜 Working Rules</h2>
+
+        <ol>
+            <li>Read the topic before attempting questions.</li>
+            <li>Try solving the problem yourself first.</li>
+            <li>Use the AI helper when you need an explanation.</li>
+            <li>Complete the practice questions.</li>
+            <li>Attempt the quiz to earn points.</li>
+            <li>Try to improve your score every time.</li>
+        </ol>
+
+    </div>
+
+
+    <!-- TOPIC 1 -->
+
+    <div class="topic">
+
+        <h2>1. Rank of Matrix</h2>
+
+        <p>
+            The rank of a matrix is the maximum number of
+            linearly independent rows or columns of the matrix.
+        </p>
+
+        <div class="ai-box">
+
+            <h3>🤖 AI Helper</h3>
+
+            <input
+                class="ai-input"
+                id="ai1"
+                placeholder="Ask a question about Rank of Matrix..."
+            >
+
+            <button class="ai-button"
+                    onclick="answerAI('ai1','answer1')">
+                Ask AI
+            </button>
+
+            <div class="ai-answer" id="answer1">
+                AI answer will appear here.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOPIC 2 -->
+
+    <div class="topic">
+
+        <h2>2. Echelon Form</h2>
+
+        <p>
+            A matrix is in row echelon form when all non-zero
+            rows are above zero rows and each leading entry
+            is to the right of the leading entry above it.
+        </p>
+
+        <div class="ai-box">
+
+            <h3>🤖 AI Helper</h3>
+
+            <input
+                class="ai-input"
+                id="ai2"
+                placeholder="Ask a question about Echelon Form..."
+            >
+
+            <button class="ai-button"
+                    onclick="answerAI('ai2','answer2')">
+                Ask AI
+            </button>
+
+            <div class="ai-answer" id="answer2">
+                AI answer will appear here.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOPIC 3 -->
+
+    <div class="topic">
+
+        <h2>3. Normal / Canonical Form</h2>
+
+        <p>
+            A matrix can be transformed into normal form using
+            elementary row and column operations.
+        </p>
+
+        <div class="ai-box">
+
+            <h3>🤖 AI Helper</h3>
+
+            <input
+                class="ai-input"
+                id="ai3"
+                placeholder="Ask a question about Normal Form..."
+            >
+
+            <button class="ai-button"
+                    onclick="answerAI('ai3','answer3')">
+                Ask AI
+            </button>
+
+            <div class="ai-answer" id="answer3">
+                AI answer will appear here.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOPIC 4 -->
+
+    <div class="topic">
+
+        <h2>
+            4. Inverse of a Matrix by Elementary Transformation
+            (Gauss-Jordan Method)
+        </h2>
+
+        <p>
+            The Gauss-Jordan method can be used to find the
+            inverse of a non-singular matrix.
+        </p>
+
+        <div class="subtopic">
+            A. Solving System of Homogeneous Equations
+        </div>
+
+        <div class="subtopic">
+            B. Solving System of Non-Homogeneous Equations
+        </div>
+
+        <div class="ai-box">
+
+            <h3>🤖 AI Helper</h3>
+
+            <input
+                class="ai-input"
+                id="ai4"
+                placeholder="Ask a question about Gauss-Jordan..."
+            >
+
+            <button class="ai-button"
+                    onclick="answerAI('ai4','answer4')">
+                Ask AI
+            </button>
+
+            <div class="ai-answer" id="answer4">
+                AI answer will appear here.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TOPIC 5 -->
+
+    <div class="topic">
+
+        <h2>5. Gauss-Seidel Iteration Method</h2>
+
+        <p>
+            The Gauss-Seidel method is an iterative technique
+            used to solve a system of linear equations.
+        </p>
+
+        <div class="ai-box">
+
+            <h3>🤖 AI Helper</h3>
+
+            <input
+                class="ai-input"
+                id="ai5"
+                placeholder="Ask a question about Gauss-Seidel..."
+            >
+
+            <button class="ai-button"
+                    onclick="answerAI('ai5','answer5')">
+                Ask AI
+            </button>
+
+            <div class="ai-answer" id="answer5">
+                AI answer will appear here.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         PRACTICE QUESTIONS
+    ========================== -->
+
+    <div class="questions">
+
+        <h2>📝 Practice Questions</h2>
+
+        <div class="question">
+
+            <b>1. What is the rank of a matrix?</b>
+
+            <br>
+
+            <button onclick="showAnswer('q1')">
+                Show Answer
+            </button>
+
+            <div class="answer" id="q1">
+                The rank is the maximum number of linearly
+                independent rows or columns of a matrix.
+            </div>
+
+        </div>
+
+
+        <div class="question">
+
+            <b>
+                2. What is the main purpose of the
+                Gauss-Jordan method?
+            </b>
+
+            <br>
+
+            <button onclick="showAnswer('q2')">
+                Show Answer
+            </button>
+
+            <div class="answer" id="q2">
+                It can be used to find the inverse of a matrix
+                and solve systems of linear equations.
+            </div>
+
+        </div>
+
+
+        <div class="question">
+
+            <b>
+                3. What is the Gauss-Seidel method?
+            </b>
+
+            <br>
+
+            <button onclick="showAnswer('q3')">
+                Show Answer
+            </button>
+
+            <div class="answer" id="q3">
+                It is an iterative method for solving systems
+                of simultaneous linear equations.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         QUIZ
+    ========================== -->
+
+    <div class="quiz">
+
+        <h2>🧠 MC Quiz</h2>
+
+        <p>
+            Each correct answer = <b>10 points</b>
+        </p>
+
+
+        <div class="quiz-question">
+
+            <p>
+                <b>1. Rank of a matrix represents:</b>
+            </p>
+
+            <label class="option">
+                <input type="radio" name="q1quiz" value="correct">
+                Number of linearly independent rows/columns
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1quiz" value="wrong">
+                Number of elements
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1quiz" value="wrong">
+                Number of diagonal elements
+            </label>
+
+        </div>
+
+
+        <div class="quiz-question">
+
+            <p>
+                <b>2. Which method is used to find the inverse
+                using elementary transformations?</b>
+            </p>
+
+            <label class="option">
+                <input type="radio" name="q2quiz" value="wrong">
+                Newton Method
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q2quiz" value="correct">
+                Gauss-Jordan Method
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q2quiz" value="wrong">
+                Euler Method
+            </label>
+
+        </div>
+
+
+        <div class="quiz-question">
+
+            <p>
+                <b>3. Gauss-Seidel is a:</b>
+            </p>
+
+            <label class="option">
+                <input type="radio" name="q3quiz" value="correct">
+                Iterative method
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q3quiz" value="wrong">
+                Graphical method
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q3quiz" value="wrong">
+                Differentiation method
+            </label>
+
+        </div>
+
+
+        <button onclick="checkQuiz()">
+            Submit Quiz
+        </button>
+
+        <div class="score" id="score">
+            ⭐ Score: 0 / 30
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+function openMC() {
+
+    document.getElementById("homePage").style.display = "none";
+
+    document.getElementById("mcPage").style.display = "block";
+
+    window.scrollTo(0,0);
+}
+
+
+function goHome() {
+
+    document.getElementById("mcPage").style.display = "none";
+
+    document.getElementById("homePage").style.display = "block";
+
+    window.scrollTo(0,0);
+}
+
+
+/* =========================
+   PRACTICE ANSWERS
+========================= */
+
+function showAnswer(id) {
+
+    let answer = document.getElementById(id);
+
+    if(answer.style.display === "block") {
+
+        answer.style.display = "none";
+
+    } else {
+
+        answer.style.display = "block";
+
+    }
+}
+
+
+/* =========================
+   SIMPLE AI HELPER
+========================= */
+
+function answerAI(inputId, answerId) {
+
+    let question =
+        document.getElementById(inputId).value.toLowerCase();
+
+    let answer =
+        document.getElementById(answerId);
+
+
+    if(question.trim() === "") {
+
+        answer.innerHTML =
+        "Please type your question first.";
+
+        return;
+    }
+
+
+    if(question.includes("rank")) {
+
+        answer.innerHTML =
+        "<b>Rank of Matrix:</b><br>" +
+        "The rank is the maximum number of linearly " +
+        "independent rows or columns of a matrix.";
+
+    }
+
+    else if(question.includes("echelon")) {
+
+        answer.innerHTML =
+        "<b>Echelon Form:</b><br>" +
+        "Convert the matrix using elementary row operations " +
+        "until the leading entries form a staircase pattern.";
+
+    }
+
+    else if(question.includes("inverse")) {
+
+        answer.innerHTML =
+        "<b>Inverse:</b><br>" +
+        "Using Gauss-Jordan elimination, write [A | I] and " +
+        "perform elementary row operations until the left side " +
+        "becomes I. The right side then becomes A⁻¹.";
+
+    }
+
+    else if(question.includes("gauss") &&
+            question.includes("seidel")) {
+
+        answer.innerHTML =
+        "<b>Gauss-Seidel:</b><br>" +
+        "It is an iterative method where the newest calculated " +
+        "value is immediately used in the next calculation.";
+
+    }
+
+    else {
+
+        answer.innerHTML =
+        "🤖 Try asking about Rank, Echelon Form, " +
+        "Inverse, Gauss-Jordan or Gauss-Seidel.";
+
+    }
+
+}
+
+
+/* =========================
+   QUIZ
+========================= */
+
+function checkQuiz() {
+
+    let score = 0;
+
+
+    let q1 =
+        document.querySelector(
+            'input[name="q1quiz"]:checked'
+        );
+
+    let q2 =
+        document.querySelector(
+            'input[name="q2quiz"]:checked'
+        );
+
+    let q3 =
+        document.querySelector(
+            'input[name="q3quiz"]:checked'
+        );
+
+
+    if(q1 && q1.value === "correct")
+        score += 10;
+
+    if(q2 && q2.value === "correct")
+        score += 10;
+
+    if(q3 && q3.value === "correct")
+        score += 10;
+
+
+    document.getElementById("score").innerHTML =
+        "⭐ Score: " + score + " / 30";
+
+
+    localStorage.setItem("mcScore", score);
+
+}
+
+
+/* Load previous score */
+
+window.onload = function() {
+
+    let oldScore =
+        localStorage.getItem("mcScore");
+
+    if(oldScore !== null) {
+
+        document.getElementById("score").innerHTML =
+            "⭐ Previous Score: " +
+            oldScore + " / 30";
+
+    }
+
+};
+
+</script>
+
+</body>
+</html>
